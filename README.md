@@ -37,11 +37,17 @@ docs in `node_modules/next/dist/docs/`.
 
 ```bash
 pnpm install
-cp .env.example .env      # then fill in DATABASE_URL / AUTH_SECRET
-npx prisma migrate deploy # applies prisma/migrations against DATABASE_URL
+cp .env.example .env      # then fill in DATABASE_URL / DIRECT_URL / AUTH_SECRET
+npx prisma migrate deploy # applies prisma/migrations, via DIRECT_URL
 pnpm db:seed               # creates the initial OWNER account (see below)
 pnpm dev
 ```
+
+`DATABASE_URL` and `DIRECT_URL` can be identical locally. In production
+(Vercel + Supabase) they must differ — `DATABASE_URL` is Supabase's pooled
+connection string (port 6543) the app queries through at runtime,
+`DIRECT_URL` is the unpooled one (port 5432) Prisma Migrate needs for DDL.
+See ADR 0001.
 
 `pnpm db:seed` only creates one `User` row (role `OWNER`) — it does **not**
 create any clients, products, instances, or other business data. An empty

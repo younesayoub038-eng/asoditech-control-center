@@ -5,9 +5,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// DATABASE_URL is the pooled connection (PgBouncer, e.g. Supabase's :6543)
+// used by the app at runtime — required on serverless hosts like Vercel to
+// avoid exhausting Postgres connections. DIRECT_URL is the unpooled
+// connection (:5432) Prisma Migrate needs to run DDL reliably. Locally,
+// both can point at the same local Postgres instance — see .env.example.
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ---------------------------------------------------------------------------

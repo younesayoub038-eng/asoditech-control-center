@@ -41,6 +41,15 @@ years without a rewrite.
   real database.
 - **Password hashing:** `bcryptjs` (pure JS, no native build step, portable
   across deployment targets).
+- **Hosting/production database:** Vercel (serverless functions) + Supabase
+  Postgres. Because Vercel functions are short-lived and can open many
+  concurrent connections under load, `DATABASE_URL` in production must be
+  Supabase's **pooled** connection string (PgBouncer, port 6543) and
+  `DIRECT_URL` its **unpooled** one (port 5432) — `prisma/schema.prisma`'s
+  `datasource` block declares both; Prisma Migrate always uses `directUrl`
+  for DDL, the generated client uses `url` for normal queries. Locally both
+  env vars point at the same local Postgres instance (no pooler needed at
+  that scale) — see `.env.example`.
 
 ## Consequences
 - No Docker is available in this environment; local Postgres runs via
