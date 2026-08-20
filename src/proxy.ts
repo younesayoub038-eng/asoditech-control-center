@@ -7,6 +7,10 @@ import { NextResponse, type NextRequest } from "next/server";
 // server components don't also enforce themselves.
 const SESSION_COOKIE = "acc_session";
 const PUBLIC_PATHS = new Set(["/connexion"]);
+// Static assets (brand images, the generated favicon route, anything in
+// /public) are never sensitive — gating them behind login would break the
+// logo/favicon on the login page itself for a signed-out visitor.
+const STATIC_ASSET_PATTERN = /\.(?:png|svg|jpg|jpeg|webp|gif|ico)$/i;
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -15,7 +19,7 @@ export function proxy(request: NextRequest) {
     PUBLIC_PATHS.has(pathname) ||
     pathname.startsWith("/api/") ||
     pathname.startsWith("/_next/") ||
-    pathname === "/favicon.ico"
+    STATIC_ASSET_PATTERN.test(pathname)
   ) {
     return NextResponse.next();
   }

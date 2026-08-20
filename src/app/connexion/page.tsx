@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth/session";
 import { LoginForm } from "@/components/auth/login-form";
+import { BrandMark } from "@/components/brand-mark";
 
 export const metadata = {
   title: "Connexion — ASODITECH Control Center",
@@ -15,9 +16,12 @@ export default async function ConnexionPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
       <div className="w-full max-w-sm space-y-6">
-        <div className="space-y-1 text-center">
-          <h1 className="text-lg font-semibold tracking-tight">ASODITECH Control Center</h1>
-          <p className="text-sm text-muted-foreground">Connectez-vous à votre espace ASODITECH.</p>
+        <div className="flex flex-col items-center gap-3 text-center">
+          <BrandMark variant="full" />
+          <div className="space-y-1">
+            <h1 className="text-lg font-semibold tracking-tight">Control Center</h1>
+            <p className="text-sm text-muted-foreground">Connectez-vous à votre espace ASODITECH.</p>
+          </div>
         </div>
         <LoginForm />
       </div>

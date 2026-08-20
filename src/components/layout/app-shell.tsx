@@ -1,5 +1,6 @@
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { LogoutButton } from "@/components/layout/logout-button";
+import { BrandMark } from "@/components/brand-mark";
 import type { CurrentUser } from "@/lib/auth/session";
 
 export function AppShell({ user, children }: { user: CurrentUser; children: React.ReactNode }) {
@@ -7,7 +8,7 @@ export function AppShell({ user, children }: { user: CurrentUser; children: Reac
     <div className="flex min-h-screen">
       <aside className="hidden w-64 shrink-0 flex-col border-r bg-card md:flex">
         <div className="flex h-14 items-center border-b px-4">
-          <span className="text-sm font-semibold tracking-tight">ASODITECH Control Center</span>
+          <BrandMark />
         </div>
         <div className="flex-1 overflow-y-auto">
           <SidebarNav />
@@ -25,7 +26,7 @@ export function AppShell({ user, children }: { user: CurrentUser; children: Reac
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="border-b md:hidden">
           <div className="flex h-14 items-center justify-between px-4">
-            <span className="text-sm font-semibold">ASODITECH Control Center</span>
+            <BrandMark />
             <LogoutButton />
           </div>
           <div className="border-t">
